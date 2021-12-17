@@ -23,7 +23,6 @@ NOISE_START_X = 0.0
 NOISE_END_X = 10.0
 NOISE_START_Y = 0.0
 NOISE_END_Y = 5.0
-NOISE_SEED = 22
 NOISE_GRADIENT_MIN = 0.0
 NOISE_GRADIENT_MAX = 255.0
 NOISE_THRESHOLD = 140.0
@@ -105,7 +104,7 @@ class Maze():
 
         (xx, yy) = numpy.meshgrid(linx, liny)
         pp = Perlin()
-        grid = pp.perlin(xx, yy, NOISE_SEED)
+        grid = pp.perlin(xx, yy, random.randint(0, 100))
         self.noise = numpy.interp(grid, [grid.min(), grid.max()], [
                                   NOISE_GRADIENT_MIN, NOISE_GRADIENT_MAX])
 
@@ -202,7 +201,7 @@ class Maze():
                         (x, y), (x+PIL_BOX, y+PIL_BOX)],
                         fill=(noise, noise, noise))
 
-                else:
+                elif (cell & CELL_VISITED):
 
                     if (cell & WALL_TOP):
                         draw.line([(x, y), (x + PIL_BOX, y)])
